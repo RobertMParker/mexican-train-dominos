@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163167825-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-163167825-1');
+  </script>
+  <meta charset="utf-8" />
+  <title>Mexican Train Dominos!</title>
+  <style>
+    * { padding: 0; margin: 0; }
+    canvas { background: #eee; display: block; margin: 0 auto; }
+  </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+</head>
+<body>
+  <h1>The Rules</h1>
+  <p>I've seen a few different variations of rules for Mexican train dominos.  Some of them are radically different.  These are the rules that I was taught, and the game enforces them.  So just use these.
+  <br/><br/>
+
+  Mexican train dominos is a turn based domino game.  The objective is to get the lowest score.  For now I'm going to explain how to play a single round, but games usually have multiple rounds.  A single round is scored by adding up all the remaining dominos left in your hand.</p>
+  <br/>
+  <h2>Layout of the board</h2>
+  So here is an example of a game.  There are two users: Parker and Eileen.  Since Eileen's name is in red, it is her turn.
+  
+  <img src='assets/screenshot.png' width=700>
+  
+  <h4>Hand</h4>
+  <p>The bottom section of the screen is your private hand.  Other players can’t see these dominos.  Dominos in the hand can be rearranged at any time by dragging them around.  Double click on a domino in your hand to flip it around.</p>
+
+  <h4>Center</h4>
+  <p>There is a spot marked “center”.  This spot must always contain a double, and it is the first move of every round.  All of the tracks connect to the center.  As you can see in the screeshot, the center contains a double 7, and the other tracks must start with a 7 as well.</p>
+
+  <h4>Tracks</h4>
+  <p>There is a "public" track and tracks for each player.  The number next to a player’s name is the number of dominos in their private hand.  Normally when playing across a table, you can see how many dominos a player has.</p>
+
+  <h4>Text Window</h4>
+  <p>There is a text window on the left side of the screen which contains the recent history, and sometimes feedback on why something is not allowed.</p>
+  
+  <h4>Buttons</h4>
+  <p>There are a few buttons that can be pressed.  Sometimes buttons will be disabled.  This screenshot is actually of an admin's view, which has a few extra buttons.  "Draw Domino" picks up a domino from the boneyard.  "Toggle my train" puts your train up or down, and it can be pressed at any time in case you forget.  "Pass" passes the turn to the next player.</p>
+  <br/>
+  
+  <h2>Setup</h2>
+  <p>Place all the dominos facedown and shuffle.  Each player is dealt some dominos into their private hand.  The exact amount of dominos is determined by how many players you have.  The game should take care of all of this stuff.</p>
+
+  <table border="1">
+    <tr><td>2-3 Players</td><td>Use a double 9 set</td><td>Draw 10 dominos for each player</td></tr>
+    <tr><td>4-6 Players</td><td>Use a double 12 set</td><td>Draw 10 dominos for each player</td></tr>
+    <tr><td>7-8 Players</td><td>Use a double 12 set</td><td>Draw 8 dominos for each player</td></tr>
+  </table>
+  <br/>
+
+  <h2>First move</h2>
+  <p>Each round starts off with the highest double that hasn’t been used to start a round yet.  This double goes into the space marked center.  To figure out who has the highest domino, I generally just ask “Does anyone have double-12”, and then If we don’t find one I’ll progress to “Does anyone have a double-11”.  Eventually someone will claim to have it.  That user should start the game. If needed, the admin should “Pass” the gameplay to that user.  That user will drag the double to the center to play it, and now that same user now gets to play another domino.</p>
+  <br/>
+  <h2>Open Tracks</h2>
+  <p>To make a move, the domino end pieces have to match and the track has to be open to you.  The public track, and your own track are always open to you.  If another player was previously unable to move and forced to pass, they should have put their train up.  Any track with a train up is open to you.  Even if the train is left up in error.
+    <br/><br/>
+All the tracks connect to the center.  If a track is empty, the next piece needs to match the center tile.  If a “double 12” is in the center, the track needs to start with a 12.</p>
+  <br/>
+  <h2>Other moves</h2>
+  <p>During a player’s turn, they must try to play a domino.  If they can’t play a domino, they pick one up from the boneyard, and if they can’t play that domino, then they should put their train up and pass.</p>
+  <br/>
+  <h2>Doubles</h2>
+  <p>If you play a double, you must play another domino or pickup.  After playing the double, the player has the choice of “closing the double” by playing on the double or “leaving the double open” by playing anywhere else that is open.
+  <br/><br/>
+  If a double is left open by a previous player, then it must be closed before any other dominos can be played. </p>
+  <br/>
+  <h2>Legal moves</h2>
+  <p>If you try to make an illegal move, the game should stop you.  Check the message window since it should explain why the move isn’t allowed.</p>
+  <br/>
+  <h2>Penalties</h2>
+  <p>If you forget to put your train up, and someone else calls you on it.  Then you have to draw an extra domino.
+  <br/>
+  If you forget to "double tap" your last domino, and someone else calls you on it.  Then you have to draw an extra domino.
+  </p>
+  <br/>
+  <h2>Winning</h2>
+  <p>The round is over when a player has no more dominos in their hand, and their turn has ended.  So you can not win by ending with a double.  You could win by playing a double, and then playing a second domino.</p>
+  <br/>
+  <h2>Basic Strategy</h2>
+  <p>These aren't rules, but this is my basic strategy for playing.  After the center tile is placed, I like to rearrange all the dominos in my hand to create my ideal train.  Usually I'll have a string of dominos that go together and some leftovers that don't quite fit.  When it's my turn, I try to get rid of the leftovers first using any track besides my own, and otherwise play on my track with the planned train.
+  <br/><br/>
+  One thing that can derail(pun intended) this strategy is if another player doesn't close a double.  That could force me to play a key part of my ideal train, and break the strategy. If someone else is about to win, leaving a double open could be a really good move.
+  </p>
+  <br/>
+  <h2>Keeping Score</h2>
+  <p>I usually keep score in a separate spreadsheet.  At the end of each round, I click "Score Game" and copy those scores into my spreadsheet.  I should probably write a feature to automatically keep score, but I've been lazy.</p>
+</body>
+</html>
+

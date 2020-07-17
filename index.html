@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163167825-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-163167825-1');
+  </script>
+  
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+  <script src="firebase-init.js"></script>
+  <script src="util.js"></script>
+  <script src="domino.js"></script>
+  <script src="gamestate.js"></script>
+  <meta charset="utf-8" />
+  <title>Mexican Train Dominos!</title>
+  <style>
+    * { padding: 0; margin: 0; }
+    canvas { background: #eee; display: block; margin: 0 auto; }
+  </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+</head>
+<body>
+  <h1>Mexican Train Dominos!</h1>
+  <p>
+  Welcome to my domino game!  Enter a list of comma separated usernames below then click the "Create Game" button.  A new domino game will be started for you.  Example input: "Parker,Adam,George"
+  </p>
+  <br/>
+  <p id="createOutput"></p>
+  <br/>
+  <h2>Let's play some dominos!</h2>
+  <br/>
+  Max double: 
+  <select id="maxDouble">
+    <option value="9">9</option>
+    <option value="12" selected="selected">12</option>
+  </select>
+  <br/>
+  Starting hand size: <input type="textfield" id="handSize" value="10" /> <br/>
+  Comma separated usernames: <input type="textfield" id="usernames" size="100"/> <br/>
+  <button id="createButton">Create Game</button>
+  <script src="create-game.js"></script>
+  <br/>
+  <br/>
+  <br/>
+  <h2>FAQ</h2>
+  <br />
+  <h3>How do I play Mexican Train Dominos?</h3>
+  <p>There are many different variations on the rules.  <a href='rules.html'>These are the rules that this game uses.</a></p>
+  <br />
+  <h3>How do I chat with other players?</h3>
+  <p>It is recommended to start a video conference separately.</p>
+  <br />
+  <h3>How do I score and reset the game each round?</h3>
+  <p>Only an admin can perform these actions.  Append "&amp;admin" to the end of the play.html URL, and reload the page.  You are now an admin, and the page should contain more buttons.  As an admin, you have the following powers:</p>
+  <ul style="list-style-type:disc;">
+    <li>You can "pass" on behalf of other players.  Normally you can only "pass" when it's your turn.</li>
+    <li>You can score the game.  Do this at the end of the round.  Save it in spreadsheet if you like.</li>
+    <li>You can reset the game.  This will end the current game, and reshuffle and redraw all the hands.  It is intended that you do this at the end of each round.</li>
+  </ul>
+  <br/>
+  <h3>What happens if I encounter a bug?</h3>
+  <p>First try to reload the webpage.  All the important gamestate should already be saved and it should come back on a reload.  If that doesn't work, maybe one of the admin features could be used to remedy the issue.  If that doesn't work, maybe just score the current state of the round, and start a brand new game.  Please email any bug reports to robertmparker [at] gmail.com</p>
+  <br />
+  <h3>I looked at the source code, why is it so crappy?</h3>
+  <p>Don't judge me.  I'm not a frontend developer, so I don't know what the proper coding conventions are for javascript.  I took the laziest approach to developing this.  There is no server-side logic.  The client just reads/writes the gamestate using Firebase Firestore API.  And the client reads the state out, and does it's thing.  So there is absolutely no security, but it's cheap, fast, and easy.</p>
+  <br />
+  <h3>Can I cheat?</h3>
+  <p>Absolutely, the entire gamestate is sent to all users.  So if you break out a debugger, then you can look at other users' hands and the boneyard.  But don't do that.  Everyone is on the honor system.</p>
+  <br />
+  <h3>Can I play this offline?</h3>
+  <p>No, state is saved to the cloud after any significant action.</p>
+  <br />
+  <h3>Can I play this by myself?</h3>
+  <p>Not really.  I wrote this specifically to play against friends.  Other apps(which don't support multiplayer!) exist that support playing against an AI.  You should try one of those.</p>
+  <br />
+  <h3>Why isn't more of this game automated?</h3>
+  <p>I wanted to give the user the ability to make mistakes.  Because I think that is an essential part of the gameplay.  For instance a user can forget to put their train up, or they can pass on their turn when they could have played a domino.  I wanted users to actually play, and not just click buttons on auto-pilot.</p>
+  <br/>
+  <h3>Will this game work in my web browser?</h3>
+  <p>Probably, but I have only tested it in the current version of Google Chrome.  It is just plain JavaScript plus the Konva API for doing writes to an HTML5 Canvas.  I would assume Konva has good cross-platform support, since thats kinda the point of using these libraries.</p>
+  <br/>
+  <h3>Does it detect when a round is over?</h3>
+  <p>No, you should call out to your friends that you won.  Then the admin can score the round, and reset the game.  Remember to call out when you have one domino left!</p>
+  <br/>
+  <h3>I broke a rule, and got called out for it.  How do I draw an extra domino?</h3>
+  <p>The game prevents you from drawing more than one domino per play.  If you need to draw an extra, the admin can use the "pass" button to skip around to you again, then you can draw an extra domino.  Then if needed the admin to use the "pass" button to advance to the correct next player</p>
+  <br/>
+  <h3>Does this work on mobile?</h3>
+  <p>I have tested it on my android phone, and someone has played it on an ipad.  So it should work.  But it's not like I am doing much testing for platform compatibility.  Or really any automated testing for that matter.</p>
+  <br/>
+  <h3>What does it look like?</h3>
+  <p>Here is a <a href="assets/screenshot.png">screenshot.</a>  And here is a <a href="https://youtu.be/-0P1M2Bak4M">video of the animation when someone wins.</a></p>
+  <br/>
+  <h3>Where is the clipart from?</h3>
+  <p>I bought the domino graphics online for $2, which is a fantastic deal.  It would have taken me hours to create something that wouldn't have looked half as good.  It was designed by <a href='assets/_JHD_social_media.jpg'>Jen Hart Design.</a>  I have a license to use this art for personal/commercial use, but please don't just scrape it from this site.</p><br/>
+  <h3>Is it open source?</h3>
+  <p>Not yet, but I'm working on that.  I've never really written any open source code before, so I don't really have an existing reputation.  And I would be horrified if people judged my professional abilities based on just this project.</p>
+</body>
+</html>
