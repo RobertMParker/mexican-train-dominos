@@ -292,7 +292,10 @@ class Gamestate {
     }
     this.tracks[trainName].dominos.push(dominoKey);
     this.playedDouble = Domino.isDouble(dominoKey);
-    var dominoName = dominoKey == "6-6" ? "sushi" : dominoKey;
+    const namedDominos = {'1-1': 'snake eyes',
+		          '6-6': 'sushi',
+		          '8-8': 'crazy 8s'};
+    var dominoName = (dominoKey in namedDominos) ? namedDominos[dominoKey] : dominoKey;
     var msg = CURRENT_USER + " played a " + dominoName + " on ";
     if (trainName == "Center") {
       msg += "the center tile.";
